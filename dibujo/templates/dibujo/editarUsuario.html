@@ -1,0 +1,21 @@
+{% extends 'dibujo/base.html' %}
+
+{% block titulo %}
+
+    Editar Perfil de Usuario
+    
+{% endblock %}
+
+{% block contenido %}
+    <a href="{% url 'detallesUsuario' %}" role="button">Cancelar</a>
+    
+    <article>
+
+        <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+    </article>
+                <button type="submit" class="botonEditar">Guardar Cambios</button>
+        </form>
+
+{% endblock %}

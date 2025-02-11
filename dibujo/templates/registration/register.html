@@ -1,0 +1,27 @@
+{% extends 'dibujo/base.html' %}
+
+    {% block titulo %}
+
+        Registro
+            
+    {% endblock %}
+
+    {% block contenido %}
+        <a href="{% url 'listadoDibujos' %}" role="button">Volver al Menú Principal</a>
+
+        <article>        
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form }}
+        </article>
+                <button type="submit" class="botonRegistro">Registrarse</button>
+                <span style="text-align: center">
+                    <p>
+                        <h6>
+                            ¿Ya tienes una cuenta <span style="color: rgb(255, 73, 1)">Registrada</span>?
+                            <a role="button" href="{% url 'login' %}" class="botonInicioSesion">Iniciar Sesión</a>
+                        </h6>
+                    </p> 
+                </span>
+            </form>
+    {% endblock %}

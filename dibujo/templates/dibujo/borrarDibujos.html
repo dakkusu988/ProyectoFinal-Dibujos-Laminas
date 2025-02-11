@@ -1,0 +1,25 @@
+{% extends 'dibujo/base.html' %}
+
+{% block titulo %}
+
+    Borrar Lámina - {{ dibujo.nombre }}
+
+{% endblock %}
+
+{% block contenido %}
+    
+    <article>
+        <h3>¿Estás seguro de que quieres borrar la lámina <b>"{{ dibujo.nombre }}"</b> ?</h3>
+        <h5>Esta acción no tiene vuelta atrás.</h5>
+    </article>
+
+    <form method="post" style="margin-right: 1350px">
+
+        {% csrf_token %}
+        <button type="submit" class="botonBorrar">Confirmar Eliminacion</button>
+        <a href="{% url 'detallesDibujos' pk=dibujo.pk %}" role="button">Cancelar</a>
+
+    </form>
+    
+
+{% endblock %}

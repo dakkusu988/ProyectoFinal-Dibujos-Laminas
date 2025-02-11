@@ -1,0 +1,30 @@
+{% extends 'dibujo/base.html' %}
+
+    {% block titulo %}
+
+        Iniciar Sesión
+        
+    {% endblock %}
+
+    {% block contenido %}
+        <a href="{% url 'listadoDibujos' %}" role="button">Volver al Menú Principal</a>
+
+        <article>
+
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <input type="hidden" name="next" value="{{ next }}">
+        </article>
+                <button type="submit" class="botonInicioSesion">Iniciar Sesión</button>
+                <span style="text-align: center">
+                    <p>
+                        <h6>
+                            ¿Todavía no te has <span style="color: rgb(255, 73, 1)">Registrado</span>?
+                            <a role="button" href="{% url 'register' %}" class="botonRegistro">Registrarse</a>
+                        </h6>
+                    </p> 
+                </span>
+            </form>        
+    {% endblock %}

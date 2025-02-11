@@ -1,0 +1,102 @@
+{% extends 'dibujo/base.html' %}
+{% load static %}
+
+{% block titulo %}
+
+    Página Principal - Listado
+
+{% endblock %}
+
+{% block contenido %}
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'añadirDibujos' %}" class="botonAñadir" role="button">Añadir Lámina</a>
+    {% endif %}
+
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'detallesUsuario' %}" role="button" class="botonBorrar">Tu Perfil</a>
+        <a href="./api/v1" role="button" class="">API Láminas</a>
+    {% else %}
+        <a href="{% url 'login' %}" role="button" class="botonInicioSesion">Iniciar Sesión</a>
+        <a href="{% url 'register' %}" role="button" class="botonRegistro">Registrarse</a>
+    {% endif %}
+    <p></p>
+
+    {% if request.user.is_authenticated %}
+        <strong> ¡Hola <u>{{ user.username }}</u>! ¡Bienvenido! </strong>
+    {% else %}
+        <strong> ¡Hola! ¡Bienvenido! </strong>
+    {% endif %}
+    <p></p>
+
+    <article style="width: 25%;">
+        <form method="GET" action="">
+            <label for="stock">Stock:</label>
+            <select name="stock" id="stock">
+                <option value="">Todo</option>
+                <option value="1">En existencia</option>
+                <option value="0">Agotados</option>
+            </select>
+            
+            <label for="precio">Precio:</label>
+            <select name="precio" id="precio">
+                <option value="">Todo</option>
+                {% for precio in precios %}
+                    <option value="{{ precio.id }}">{{ precio.precio }}€</option>
+                {% endfor %}
+            </select>
+    
+            <label for="search">Buscar:</label>
+            <input type="text" name="search" id="search" placeholder="Escribe el Nombre, Género o Autor de la lámina..." value="{{ search_query }}">
+            <button type="submit" class="botonEditar">Filtrar</button>
+        </form>    
+    </article>
+
+    <div class="dibujo-lista">
+        {% for dibujo in dibujos %}
+            <div class="dibujo-item">
+                <a href="{% url 'detallesDibujos' pk=dibujo.pk %}">
+                    <img src="{{ dibujo.imagen.url }}" class="tamañoImagenListado imagenResaltada" alt="{{ dibujo.nombre }}">
+                </a>
+                <br>
+                <h4>{{ dibujo.nombre }}</h4>
+
+                {% if dibujo.stock == 0 %}
+                    <p><b>AGOTADO</b></p>
+                {% else %}
+                    <p>{{ dibujo.precio }}</p>
+                {% endif %}
+                
+                <form method="post" action="{% url 'like-toggle' dibujo.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="botonMGSinClase">
+                        {% if user.is_authenticated and dibujo.id in user_likes %}
+                            <img src="{% static 'img/me_gusta.png' %}" alt="Me Gusta" class="tamañoImagenMG">
+                        {% else %}
+                            <img src="{% static 'img/no_me_gusta.png' %}" alt="No me Gusta" class="tamañoImagenMG">
+                        {% endif %}
+                    </button>
+                </form>
+
+                <p>{{ dibujo.like_set.count }} Me Gusta</p>
+            </div>
+        {% empty %}
+            <p>No se encontraron láminas disponibles.</p>
+        {% endfor %}
+    </div>
+
+    <span style="text-align: center">
+        <h6>
+            <
+            {% if page_obj.has_previous %}
+                <a href="{% url 'listadoDibujos' %}?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+            - {% endif %}
+
+                {{ page_obj.number }}
+
+            {% if page_obj.has_next %} -
+                <a href="{% url 'listadoDibujos' %}?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+            {% endif %}
+            >
+        </h6>
+    </span>
+{% endblock %}

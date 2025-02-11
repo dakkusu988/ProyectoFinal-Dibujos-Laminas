@@ -1,0 +1,19 @@
+{% extends 'dibujo/base.html' %}
+
+    {% block titulo %}
+
+        Sesión Cerrada
+        
+    {% endblock %}
+
+    {% block contenido %}
+
+        <article>
+            <p>Puedes <span style="color: rgb(52, 255, 65)">Iniciar Sesión</span> 
+            o 
+            <span style="color: rgb(255, 73, 1)">Resgistrarte</span>.</p>
+
+            <a role="button" href="{% url 'login' %}">Iniciar Sesión</a>
+        </article>
+    
+    {% endblock %}

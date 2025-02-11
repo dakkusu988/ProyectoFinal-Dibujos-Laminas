@@ -1,0 +1,24 @@
+{% extends 'dibujo/base.html' %}
+
+{% block titulo %}
+
+    Editar Lámina - {{ dibujo.nombre }}
+
+{% endblock %}
+
+{% block contenido %}
+
+    <a href="{% url 'detallesDibujos' pk=dibujo.pk %}" role="button">Cancelar</a>
+    <p></p>
+    
+    <article>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+    </article>
+    
+            <button type="submit" class="botonEditar">Guardar Cambios</button>
+        </form>
+
+{% endblock %}

@@ -13,7 +13,7 @@ class Precio(models.Model):
 # Valida la imagen en el formulario
 def validate_image(value):
     if value is None:
-        raise ValidationError((''))
+        raise ValidationError(('Debes subir una imagen.'))
     
 class Dibujo(models.Model):
     nombre = models.CharField(max_length=100)
@@ -32,3 +32,13 @@ class Like(models.Model):
 
     class Meta:
         unique_together = ('user', 'dibujo')
+
+class Carrito(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    creado_en = models.DateTimeField(auto_now_add=True)
+
+class CarritoItem(models.Model):
+    carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE, related_name='items')
+    dibujo = models.ForeignKey(Dibujo, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField(default=1)
+    agregado_en = models.DateTimeField(auto_now_add=True)

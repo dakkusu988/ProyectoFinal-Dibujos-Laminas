@@ -185,3 +185,51 @@ def like_toggle(request, dibujo_id):
     # Recarga la pagina cuando da el MG para actualizar los MG y te devuelve a la 
     # ultima pagina que estuvieses y si no la encuentra vuelves al Menu Principal
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/')) 
+
+# Ver el Carrito
+@login_required
+def ver_carrito(request):
+    # Obtener o crear el carrito del usuario
+    carrito = Carrito.objects.filter(usuario=request.user).first()
+    items = carrito.items.all() if carrito else []
+
+    return render(request, 'dibujo/carrito.html', {'items': items})
+
+# Añadir al Carrito
+@login_required
+def añadir_al_carrito(request, dibujo_id):
+    dibujo = get_object_or_404(Dibujo, id=dibujo_id)
+    carrito, created = Carrito.objects.get_or_create(usuario=request.user)
+
+    # Verificar si ya está en el carrito
+    carrito_item, created = CarritoItem.objects.get_or_create(carrito=carrito, dibujo=dibujo)
+    if not created:
+        carrito_item.cantidad += 1
+    carrito_item.save()
+
+    return redirect('detallesDibujos', pk=dibujo_id)
+
+# Eliminar Carrito
+@login_required
+def eliminar_del_carrito(request, dibujo_id):
+    carrito = get_object_or_404(Carrito, usuario=request.user)
+    carrito.items.filter(dibujo_id=dibujo_id).delete()
+    return redirect('ver_carrito')
+
+# Actualizar Carrito
+@login_required
+def actualizar_carrito(request, dibujo_id):
+    dibujo = get_object_or_404(Dibujo, id=dibujo_id)
+    carrito, created = Carrito.objects.get_or_create(usuario=request.user)
+    carrito_item, created = CarritoItem.objects.get_or_create(carrito=carrito, dibujo=dibujo)
+
+    if request.POST.get('accion') == 'sumar':
+        if carrito_item.cantidad < dibujo.stock:
+            carrito_item.cantidad += 1
+
+    elif request.POST.get('accion') == 'restar':
+        if carrito_item.cantidad > 1:
+            carrito_item.cantidad -= 1
+
+    carrito_item.save()
+    return redirect('ver_carrito')

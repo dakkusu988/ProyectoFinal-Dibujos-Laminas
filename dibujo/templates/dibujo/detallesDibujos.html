@@ -2,33 +2,52 @@
 {% load static %}
 
 {% block titulo %}
+
     Detalles de la Lámina
+    
 {% endblock %}
 
 {% block contenido %}
 
-    <a href="{% url 'listadoDibujos' %}" role="button">Volver al Menú Principal</a>
+    <a href="{% url 'listadoDibujos' %}" role="button">Volver a la Tienda</a>
 
     {% if request.user.is_authenticated %}
         <a href="{% url 'detallesUsuario' %}" role="button" class="botonBorrar">Tu Perfil</a>
-    {% else %}
-        <a href="{% url 'login' %}" role="button" class="botonInicioSesion">Iniciar Sesión</a>
-        <a href="{% url 'register' %}" role="button" class="botonRegistro">Registrarse</a>
+        <a href="{% url 'añadirDibujos' %}" class="botonAñadir" role="button">Añadir Lámina</a>
+        <a href="{% url 'ver_carrito' %}" role="button" class="botonCarrito">Ver Carrito</a>
     {% endif %}
 
-    <article style="margin-right: 0px">    
-        <h2> LÁMINA DE {{ dibujo.nombre }} </h2>
-        <img src="{{ dibujo.imagen.url }}" class="tamañoImagenListado" alt="{{ dibujo.nombre }}">
-        <p>
-        <p> <b>Genero:</b> {{ dibujo.genero }} </p>
-        <p> <b>Stock:</b> {{ dibujo.stock }} uds </p>
-        <p> <b>Precio:</b> {{ dibujo.precio }} </p>
-        <p> <b>Autor:</b> <a href="{% url 'detallesUsuario' %}">{{ dibujo.autor.username }}</a> </p>
+    <article>
+        <h2>{{ dibujo.nombre }}</h2>
+        <p><img src="{{ dibujo.imagen.url }}" alt="{{ dibujo.nombre }}" style="width: 300px"></p>
+        <p><b>Autor:</b> {{ dibujo.autor.username }}</p>
+        <p><b>Descripción:</b> {{ dibujo.descripcion }}</p>
+        <p><b>Precio:</b> {{ dibujo.precio }}</p>
+        <p><b>Stock disponible:</b> {{ dibujo.stock }}</p>
+
         <p></p>
+
         {% if request.user == dibujo.autor %}
-        <a href="{% url 'editarDibujos' pk=dibujo.pk %}" class="botonEditar" role="button">Editar</a>
-        <a href="{% url 'borrarDibujos' pk=dibujo.pk %}" class="botonBorrar" role="button">Borrar</a>
-    {% endif %}
+            <a href="{% url 'editarDibujos' pk=dibujo.pk %}" class="botonEditar" role="button"> <b><i>Editar</i></b> </a>
+            <a href="{% url 'borrarDibujos' pk=dibujo.pk %}" class="botonBorrar" role="button"> <b><i>Eliminar</i></b> </a>
+        {% endif %}
+
+        <p></p>
+
+        {% if request.user.is_authenticated and dibujo.stock > 0 %}
+            <form method="post" action="{% url 'añadir_al_carrito' dibujo.id %}">
+                {% csrf_token %}
+                <button type="" class="botonCarrito">
+                    <b><i>Añadir al Carrito</i></b>
+                </button>
+            </form>
+        {% elif dibujo.stock == 0 %}
+            <button type="" class="botonNoStock">
+                <b><i>PRODUCTO AGOTADO TEMPORALMENTE</i></b>
+            </button>
+        {% endif %}
+
+        <p></p>
 
         <form method="post" action="{% url 'like-toggle' dibujo.id %}">
             {% csrf_token %}
@@ -43,7 +62,8 @@
                     </p>
                 {% endif %}
             </button>
-            <p>{{ dibujo.like_set.count }} Me Gusta</p>
+            <p>{{ dibujo.like_set.count }} Me Gusta</p>           
         </form>
+
     </article>
 {% endblock %}

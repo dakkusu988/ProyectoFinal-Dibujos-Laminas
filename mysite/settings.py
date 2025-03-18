@@ -118,7 +118,7 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LANGUAJES = [
+LANGUAGES = [
     ('en', 'English'),
     ('es', 'Spanish')
 ]

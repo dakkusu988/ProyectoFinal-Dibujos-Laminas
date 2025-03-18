@@ -2,7 +2,7 @@
 
 {% block titulo %}
 
-    Editar Perfil de Usuario
+    Editando el Perfil...
     
 {% endblock %}
 
@@ -15,7 +15,7 @@
                 {% csrf_token %}
                 {{ form.as_p }}
     </article>
-                <button type="submit" class="botonEditar">Guardar Cambios</button>
+                <button type="submit" class="botonEditar"> <b><i>Guardar Cambios</b></i> </button>
         </form>
 
 {% endblock %}

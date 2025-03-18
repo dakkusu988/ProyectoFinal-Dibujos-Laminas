@@ -2,12 +2,14 @@
 
 {% block titulo %}
 
-    Perfil de Usuario - Detalles
+    Perfil de {{ user.first_name }}
 
 {% endblock %}
 
 {% block contenido %}
-    <a href="{% url 'listadoDibujos' %}" role="button">Volver al Menú Principal</a>
+    <a href="{% url 'listadoDibujos' %}" role="button">Volver a la Tienda</a>
+    <a href="{% url 'añadirDibujos' %}" class="botonAñadir" role="button">Añadir Lámina</a>
+    <a href="{% url 'ver_carrito' %}" role="button" class="botonCarrito">Ver Carrito</a>
 
     <article style="margin-right: 0px">
         <p><b>Usuario:</b> @{{ user.username }}</p>
@@ -16,12 +18,12 @@
     </article>
 
     <p>
-        <a href="{% url 'editarUsuario' %}" role="button" class="botonEditar">Editar Perfil</a>
-        <a href="{% url 'logout' %}" role="button" class="botonBorrar">Cerrar Sesión</a>
+        <a href="{% url 'editarUsuario' %}" role="button" class="botonEditar"> <b><i>Editar Perfil</b></i> </a>
+        <a href="{% url 'logout' %}" role="button" class="botonBorrar"> <b><i>Cerrar Sesión</b></i> </a>
     </p>
     
     <h2 style="text-align: center">Láminas de {{ user.username }}:</h2>
-    <ul>
+    <article>
         <div class="dibujo-lista">
             {% for dibujo in dibujos %}
                 <div class="dibujo-item">
@@ -40,10 +42,10 @@
                 <p>No se encontraron láminas disponibles.</p>
             {% endfor %}
         </div>
-    </ul>
+    </article>
 
     <h2 style="text-align: center">Me Gusta de {{ user.username }}:</h2>
-    <ul>
+    <article>
         <div class="dibujo-lista">
             {% for dibujo in me_gustas %}
                 <div class="dibujo-item">
@@ -55,12 +57,12 @@
                     {% if dibujo.stock == 0 %}
                         <b>AGOTADO</b>
                     {% else %}
-                        <p>{{ dibujo.precio }}€</p>
+                        <p>{{ dibujo.precio }}</p>
                     {% endif %}
                 </div>
             {% empty %}
                 <p>No has marcado ninguna lámina como "Me Gusta".</p>
             {% endfor %}
         </div>
-    </ul>
+    </article>
 {% endblock %}

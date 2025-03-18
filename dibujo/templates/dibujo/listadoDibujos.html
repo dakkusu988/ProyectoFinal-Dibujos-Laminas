@@ -3,18 +3,17 @@
 
 {% block titulo %}
 
-    Página Principal - Listado
+    Tienda de Láminas
 
 {% endblock %}
 
 {% block contenido %}
     {% if request.user.is_authenticated %}
-        <a href="{% url 'añadirDibujos' %}" class="botonAñadir" role="button">Añadir Lámina</a>
-    {% endif %}
-
-    {% if request.user.is_authenticated %}
         <a href="{% url 'detallesUsuario' %}" role="button" class="botonBorrar">Tu Perfil</a>
-        <a href="./api/v1" role="button" class="">API Láminas</a>
+        <a href="{% url 'añadirDibujos' %}" class="botonAñadir" role="button">Añadir Lámina</a>
+        {% comment %} <a href="./api/v1" role="button" class="">API Láminas</a> {% endcomment %}
+        <a href="{% url 'ver_carrito' %}" role="button" class="botonCarrito">Ver Carrito</a>
+
     {% else %}
         <a href="{% url 'login' %}" role="button" class="botonInicioSesion">Iniciar Sesión</a>
         <a href="{% url 'register' %}" role="button" class="botonRegistro">Registrarse</a>
@@ -22,7 +21,7 @@
     <p></p>
 
     {% if request.user.is_authenticated %}
-        <strong> ¡Hola <u>{{ user.username }}</u>! ¡Bienvenido! </strong>
+        <strong> ¡Hola <u>{{ user.first_name }}</u>! ¡Bienvenido! </strong>
     {% else %}
         <strong> ¡Hola! ¡Bienvenido! </strong>
     {% endif %}
@@ -30,14 +29,14 @@
 
     <article style="width: 25%;">
         <form method="GET" action="">
-            <label for="stock">Stock:</label>
+            <label for="stock"> <b>Stock:</b> </label>
             <select name="stock" id="stock">
                 <option value="">Todo</option>
                 <option value="1">En existencia</option>
                 <option value="0">Agotados</option>
             </select>
             
-            <label for="precio">Precio:</label>
+            <label for="precio"> <b>Precio:</b> </label>
             <select name="precio" id="precio">
                 <option value="">Todo</option>
                 {% for precio in precios %}
@@ -45,9 +44,9 @@
                 {% endfor %}
             </select>
     
-            <label for="search">Buscar:</label>
+            <label for="search"> <b>Buscar:</b> </label>
             <input type="text" name="search" id="search" placeholder="Escribe el Nombre, Género o Autor de la lámina..." value="{{ search_query }}">
-            <button type="submit" class="botonEditar">Filtrar</button>
+            <button type="submit" class="botonEditar"> <b><i>Filtrar</i></b> </button>
         </form>    
     </article>
 
@@ -57,7 +56,9 @@
                 <a href="{% url 'detallesDibujos' pk=dibujo.pk %}">
                     <img src="{{ dibujo.imagen.url }}" class="tamañoImagenListado imagenResaltada" alt="{{ dibujo.nombre }}">
                 </a>
+
                 <br>
+                
                 <h4>{{ dibujo.nombre }}</h4>
 
                 {% if dibujo.stock == 0 %}

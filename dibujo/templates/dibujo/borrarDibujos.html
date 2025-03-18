@@ -2,22 +2,23 @@
 
 {% block titulo %}
 
-    Borrar Lámina - {{ dibujo.nombre }}
+    Borrando la Lámina "{{ dibujo.nombre }}"...
 
 {% endblock %}
 
 {% block contenido %}
+
+    <a href="{% url 'detallesDibujos' pk=dibujo.pk %}" role="button">Cancelar</a>
     
     <article>
-        <h3>¿Estás seguro de que quieres borrar la lámina <b>"{{ dibujo.nombre }}"</b> ?</h3>
-        <h5>Esta acción no tiene vuelta atrás.</h5>
+        <h3>¿Estás seguro de que quieres borrar la lámina <b>"{{ dibujo.nombre }}"</b>?</h3>
+        <h5>Esta acción es PERMANENTE y no tiene vuelta atrás.</h5>
     </article>
 
     <form method="post" style="margin-right: 1350px">
 
         {% csrf_token %}
-        <button type="submit" class="botonBorrar">Confirmar Eliminacion</button>
-        <a href="{% url 'detallesDibujos' pk=dibujo.pk %}" role="button">Cancelar</a>
+        <button type="submit" class="botonBorrar"> <b><i>Confirmación</i></b> </button>
 
     </form>
     

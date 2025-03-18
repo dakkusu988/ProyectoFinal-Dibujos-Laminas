@@ -1,0 +1,61 @@
+{% extends 'dibujo/base.html' %}
+
+{% block titulo %}
+
+    Tu Carrito
+    
+{% endblock %}
+
+{% block contenido %}
+
+    <a href="{% url 'listadoDibujos' %}" role="button">Volver a la Tienda</a>
+    <a href="{% url 'detallesUsuario' %}" role="button" class="botonBorrar">Tu Perfil</a>
+
+    {% if items %}
+        <article>
+            {% for item in items %}
+                <h4>{{ item.dibujo.nombre }}</h4>
+
+                <p>
+                    <a href="{% url 'detallesDibujos' pk=item.dibujo.pk %}">
+                        <img src="{{ item.dibujo.imagen.url }}" class="imagenResaltada" alt="{{ item.dibujo.nombre }}" style="width: 250px;">
+                    </a>             
+                </p>
+
+                <p> <b>Precio:</b> {{ item.dibujo.precio }}</p>
+                <p> <b>Stock:</b> {{ item.dibujo.stock }}</p>
+                        
+                <form method="post" action="{% url 'actualizar_carrito' item.dibujo.id %}">
+                    {% csrf_token %}
+                    
+                    <button type="" name="accion" value="restar" class="botonAñadir" {% if item.cantidad == 1 %} disabled {% endif %}>
+                        <b>-</b>
+                    </button>
+                
+                    <span>
+                        <b>{{ item.cantidad }}</b>
+                    </span>
+                
+                    <button type="" name="accion" value="sumar" class="botonNoStock" {% if item.cantidad >= item.dibujo.stock %} disabled {% endif %}>
+                        <b>+</b>
+                    </button>
+                </form>
+                
+
+                <p></p>
+                        
+                <form method="post" action="{% url 'eliminar_del_carrito' item.dibujo.id %}">
+                    {% csrf_token %}
+                    <button type="" class="botonBorrar"> <b><i>Quitar esta Lámina </b></i> </button>
+                </form>
+                
+                <p></p>
+            {% endfor %}
+        </article>
+    {% else %}
+        <article>
+            <h4>Tu Carrito está vacío.</h4>
+        </article>
+    {% endif %}
+
+{% endblock %}

@@ -7,18 +7,18 @@
     {% endblock %}
 
     {% block contenido %}
-        <a href="{% url 'listadoDibujos' %}" role="button">Volver al Menú Principal</a>
+        <a href="{% url 'listadoDibujos' %}" role="button" class="botonVolverAlMenu">Volver a la Tienda</a>
 
         <article>        
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form }}
         </article>
-                <button type="submit" class="botonRegistro">Registrarse</button>
+                <button type="submit" class="botonRegistro">  <b><i>Registrarse</i></b> </button>
                 <span style="text-align: center">
                     <p>
                         <h6>
-                            ¿Ya tienes una cuenta <span style="color: rgb(255, 73, 1)">Registrada</span>?
+                            ¿Ya tienes una cuenta <span style="color: rgb(1, 238, 255)">Registrada</span>?
                             <a role="button" href="{% url 'login' %}" class="botonInicioSesion">Iniciar Sesión</a>
                         </h6>
                     </p> 

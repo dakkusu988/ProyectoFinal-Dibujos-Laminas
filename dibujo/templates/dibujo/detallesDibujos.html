@@ -9,7 +9,7 @@
 
 {% block contenido %}
 
-    <a href="{% url 'listadoDibujos' %}" role="button">Volver a la Tienda</a>
+    <a href="{% url 'listadoDibujos' %}" role="button" class="botonVolverAlMenu">Volver a la Tienda</a>
 
     {% if request.user.is_authenticated %}
         <a href="{% url 'detallesUsuario' %}" role="button" class="botonBorrar">Tu Perfil</a>
@@ -21,7 +21,6 @@
         <h2>{{ dibujo.nombre }}</h2>
         <p><img src="{{ dibujo.imagen.url }}" alt="{{ dibujo.nombre }}" style="width: 300px"></p>
         <p><b>Autor:</b> {{ dibujo.autor.username }}</p>
-        <p><b>Descripción:</b> {{ dibujo.descripcion }}</p>
         <p><b>Precio:</b> {{ dibujo.precio }}</p>
         <p><b>Stock disponible:</b> {{ dibujo.stock }}</p>
 

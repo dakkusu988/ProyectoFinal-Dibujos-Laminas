@@ -7,7 +7,7 @@
     {% endblock %}
 
     {% block contenido %}
-        <a href="{% url 'listadoDibujos' %}" role="button">Volver al Menú Principal</a>
+        <a href="{% url 'listadoDibujos' %}" role="button" class="botonVolverAlMenu">Volver a la Tienda</a>
 
         <article>
 
@@ -17,7 +17,7 @@
 
                 <input type="hidden" name="next" value="{{ next }}">
         </article>
-                <button type="submit" class="botonInicioSesion">Iniciar Sesión</button>
+                <button type="submit" class="botonInicioSesion"> <b><i>Iniciar Sesión</i></b></button>
                 <span style="text-align: center">
                     <p>
                         <h6>

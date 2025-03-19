@@ -284,7 +284,7 @@ def procesar_compra(request):
         })
 
         send_mail(
-            subject="Solicitud de compra de láminas",
+            subject="Solicitud de Compra de Láminas",
             message=mensaje,
             from_email="tu_correo@example.com",
             recipient_list=[email],

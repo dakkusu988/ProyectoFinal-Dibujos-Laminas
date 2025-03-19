@@ -129,11 +129,11 @@ LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = 'detallesUsuario'
 
 # Configuración del servidor de correo
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # Pruebas por consola
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # Pruebas por consola
 EMAIL_HOST = 'smtp.gmail.com'  # Usa el servidor SMTP de tu proveedor de correo
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'bydaxplayyt@gmail.com'
-EMAIL_HOST_PASSWORD = 'tmji nbmp eazx zbee'  # Usar una contraseña de aplicación
+EMAIL_HOST_PASSWORD = ''  # Usar una contraseña de aplicación
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

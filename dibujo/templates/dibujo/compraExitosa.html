@@ -1,0 +1,17 @@
+{% extends 'dibujo/base.html' %}
+
+{% block titulo %}
+
+    ¡Compra realizada con éxito!
+    
+{% endblock %}
+
+{% block contenido %}
+  
+<article>
+    <p>Tu Pedido ha sido procesado y los Autores han sido notificados.</p>
+</article>
+
+    <a href="{% url 'listadoDibujos' %}" role="button" class="botonVolverAlMenu">Volver a la Tienda</a>
+
+{% endblock %}

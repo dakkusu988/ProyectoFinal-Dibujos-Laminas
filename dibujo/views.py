@@ -10,6 +10,8 @@ from django.contrib import messages
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
 # CRUD Láminas
 # HTML Listado
@@ -241,11 +243,60 @@ def actualizar_carrito(request, dibujo_id):
 #Confirmar Compra de los Pedidos
 @login_required
 def confirmar_compra(request):
-    # Obtener el carrito del usuario
     carrito = Carrito.objects.filter(usuario=request.user).first()
-    items = carrito.items.all() if carrito else []
+    if not carrito:
+        messages.error(request, "Tu carrito está vacío.")
+        return redirect('ver_carrito')
     
-    if request.method == "POST":
-        return redirect('procesar_compra')  # Redirige a la función que generará el PDF y enviará los correos
+    items = CarritoItem.objects.filter(carrito=carrito)
+    total_precio = sum(item.dibujo.precio.precio * item.cantidad for item in items)
+
+    return render(request, 'dibujo/confirmarCompra.html', {
+        'items': items,
+        'total_precio': total_precio
+    })
+
+# Procesar Compra
+@login_required
+def procesar_compra(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     
-    return render(request, 'dibujo/confirmar_compra.html', {'items': items})
+    carrito = Carrito.objects.filter(usuario=request.user).first()
+    if not carrito:
+        messages.error(request, "Tu carrito está vacío.")
+        return redirect('ver_carrito')
+    
+    correos_autores = {}
+    
+    for item in CarritoItem.objects.filter(carrito=carrito):
+        dibujo = item.dibujo
+        autor = dibujo.autor
+        if autor.email not in correos_autores:
+            correos_autores[autor.email] = []
+        correos_autores[autor.email].append(item)
+    
+    for email, items in correos_autores.items():
+        mensaje = render_to_string('dibujo/emailPedido.html', {
+            'autor': items[0].dibujo.autor,
+            'comprador': request.user,
+            'items': items,
+        })
+
+        send_mail(
+            subject="Solicitud de compra de láminas",
+            message=mensaje,
+            from_email="tu_correo@example.com",
+            recipient_list=[email],
+            fail_silently=False,
+        )
+
+    # Vaciar el carrito después de la compra
+    CarritoItem.objects.filter(carrito=carrito).delete()
+    
+    return redirect('compra_exitosa')
+
+# Compra Exitosa
+@login_required
+def compra_exitosa(request):
+    return render(request, 'dibujo/compraExitosa.html')

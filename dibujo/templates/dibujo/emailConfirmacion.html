@@ -1,0 +1,21 @@
+¡Hola {{ usuario.username }}!
+¡Gracias por tu pedido en nuestra plataforma! 
+Aquí tienes los "Detalles de tu Compra": 
+
+# DETALLES DE LA COMPRA # 
+
+1. Láminas Solicitadas: {% for item in items %}
+
+    - Nombre: {{ item.dibujo.nombre }} 
+    - Cantidad: {{ item.cantidad }}
+    - Precio: {{ item.dibujo.precio.precio }}€ {% endfor %}
+
+    - Total a Pagar: {{ total_precio }}€
+
+*Los Autores han sido notificados del pedido de sus obras y se pondrán
+en contacto contigo lo antes posible para que efectues el pago por ellas*.
+
+¡Gracias por tu confianza en nosotros!
+
+¡Saludos! Atentamente,
+el Equipo de la Tienda de Láminas.

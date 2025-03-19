@@ -1,23 +1,18 @@
 ¡Hola {{ autor.username }}!
+Un Usuario quiere comprar alguna de tus Láminas. 
+Aquí están los "Detalles del Pedido":
 
-- Un Usuario ha comprado una de tus Láminas. Aquí están los "Detalles del Pedido":
+# DETALLES DEL PEDIDO #
 
-# DETALLES DEL PEDIDO
+1. Información del Comprador:
+    - Usuario: {{ comprador.username }}
+    - Nombre completo: {{ comprador.first_name }}
+    - Email: {{ comprador.email }}
 
-- Información del Comprador:
+2. Láminas Solicitadas: {% for item in items %}
+    - Nombre: {{ item.dibujo.nombre }}
+    - Cantidad: {{ item.cantidad }}
+    - Precio: {{ item.dibujo.precio.precio }}€ {% endfor %}
 
-    Usuario: {{ comprador.username }}
-    Nombre completo: {{ comprador.first_name }}
-    Email: {{ comprador.email }}
-
-- Detalles del pedido: {% for item in items %}
-
-        - {{ item.dibujo.nombre }}
-        - Cantidad: {{ item.cantidad }}
-        - Precio: {{ item.dibujo.precio.precio }}€ {% endfor %}
-
-- Adjunto encontrarás el PDF con los "Detalles del Pedido".
-
-¡Saludos!
-
-El Equipo de la Tienda de Láminas.
+¡Saludos! Atentamente,
+el Equipo de la Tienda de Láminas.

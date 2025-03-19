@@ -8,34 +8,36 @@
 
 {% block contenido %}
 
-<a type="" href="{% url 'ver_carrito' %}" class="botonVolverAlMenu"><button>Cancelar</button></a>
+    <a href="{% url 'ver_carrito' %}" role="button" class="botonVolverAlMenu">Cancelar</a>
 
     <article>
 
-        <p>Por favor, revisa tu pedido antes de confirmar la compra.</p>
+        <h3>Por favor, REVISA tu Pedido antes de "Confirmar la Compra".</h3>
+        <h5>Esta acción es PERMANENTE y no tiene vuelta atrás.</h5>
 
         <table>
             <thead>
-            <tr>
-                <th>Nombre de la Lámina</th>
-                <th>Autor</th>
-                <th>Precio</th>
-                <th>Cantidad</th>
-            </tr>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Autor</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                </tr>
             </thead>
+
             <tbody>
-            {% for item in items %}
-            <tr>
-                <td>{{ item.dibujo.nombre }}</td>
-                <td>{{ item.dibujo.autor.username }}</td>
-                <td>{{ item.dibujo.precio.precio }} €</td>
-                <td>{{ item.cantidad }}</td>
-            </tr>
-            {% endfor %}
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item.dibujo.nombre }}</td>
+                        <td>{{ item.dibujo.autor.username }}</td>
+                        <td>{{ item.dibujo.precio.precio }}€</td>
+                        <td>{{ item.cantidad }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
 
-        <h3>Total: {{ total_precio }} €</h3>
+        <h3>Total: {{ total_precio }}€</h3>
 
     </article>
 

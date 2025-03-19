@@ -256,7 +256,7 @@ def confirmar_compra(request):
         'total_precio': total_precio
     })
 
-# Procesar Compra
+# Procesar Compra & Enviar Confirmación al Comprador
 @login_required
 def procesar_compra(request):
     if not request.user.is_authenticated:
@@ -267,34 +267,58 @@ def procesar_compra(request):
         messages.error(request, "Tu carrito está vacío.")
         return redirect('ver_carrito')
     
-    correos_autores = {}
+    items = CarritoItem.objects.filter(carrito=carrito)
+    if not items.exists():
+        messages.error(request, "No hay ítems en el carrito.")
+        return redirect('ver_carrito')
     
-    for item in CarritoItem.objects.filter(carrito=carrito):
+    total_precio = sum(item.dibujo.precio.precio * item.cantidad for item in items)
+    correos_autores = {}
+
+    # Agrupar los ítems por autor para enviar notificación a los autores de las láminas
+    for item in items:
         dibujo = item.dibujo
         autor = dibujo.autor
         if autor.email not in correos_autores:
             correos_autores[autor.email] = []
         correos_autores[autor.email].append(item)
-    
+
+    # Enviar correo a cada autor
     for email, items in correos_autores.items():
-        mensaje = render_to_string('dibujo/emailPedido.html', {
+        mensaje_autor = render_to_string('dibujo/emailPedido.html', {
             'autor': items[0].dibujo.autor,
             'comprador': request.user,
             'items': items,
         })
 
         send_mail(
-            subject="Solicitud de Compra de Láminas",
-            message=mensaje,
+            subject="Nuevo Pedido de Compra - Láminas Solicitadas por el Usuario",
+            message=mensaje_autor,
             from_email="tu_correo@example.com",
             recipient_list=[email],
             fail_silently=False,
         )
 
-    # Vaciar el carrito después de la compra
+    # Enviar correo de confirmación al comprador
+    mensaje_comprador = render_to_string('dibujo/emailConfirmacion.html', {
+        'usuario': request.user,
+        'items': items,
+        'total_precio': total_precio
+    })
+
+    send_mail(
+        subject="Confirmación de Compra - Láminas Solicitadas al/los Autor/es",
+        message=mensaje_comprador,
+        from_email="tu_correo@example.com",
+        recipient_list=[request.user.email],
+        fail_silently=False,
+    )
+
+    # Vaciar el carrito despues de confirmar la compra
     CarritoItem.objects.filter(carrito=carrito).delete()
     
     return redirect('compra_exitosa')
+
 
 # Compra Exitosa
 @login_required

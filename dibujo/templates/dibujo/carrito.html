@@ -12,6 +12,7 @@
     <a href="{% url 'detallesUsuario' %}" role="button" class="botonBorrar">Tu Perfil</a>
 
     {% if items %}
+    
         <article>
             {% for item in items %}
                 <h4>{{ item.dibujo.nombre }}</h4>
@@ -53,13 +54,15 @@
 
             <h3>Total: {{ total_precio }} €</h3>
 
-            <a href="{% url 'confirmar_compra' %}" role="button" class="btn btn-success botonCarrito"> <b><i>Confirmar Compra</i></b> </a>
-
+            <a href="{% url 'confirmar_compra' %}" role="button" class="btn btn-success botonCarrito"> <b><i>Pagina de Confirmación</i></b> </a>
         </article>
+
     {% else %}
+
         <article>
             <h4>Tu Carrito está vacío.</h4>
         </article>
+
     {% endif %}
 
 {% endblock %}

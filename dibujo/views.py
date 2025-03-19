@@ -193,7 +193,11 @@ def ver_carrito(request):
     carrito = Carrito.objects.filter(usuario=request.user).first()
     items = carrito.items.all() if carrito else []
 
-    return render(request, 'dibujo/carrito.html', {'items': items})
+    # Calcular el total sumando el precio del dibujo multiplicado por la cantidad en el carrito
+    total_precio = sum(item.dibujo.precio.precio * item.cantidad for item in items)
+
+    return render(request, 'dibujo/carrito.html', {'items': items, 'total_precio': total_precio})
+
 
 # Añadir al Carrito
 @login_required

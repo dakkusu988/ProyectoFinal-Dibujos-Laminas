@@ -237,3 +237,15 @@ def actualizar_carrito(request, dibujo_id):
 
     carrito_item.save()
     return redirect('ver_carrito')
+
+#Confirmar Compra de los Pedidos
+@login_required
+def confirmar_compra(request):
+    # Obtener el carrito del usuario
+    carrito = Carrito.objects.filter(usuario=request.user).first()
+    items = carrito.items.all() if carrito else []
+    
+    if request.method == "POST":
+        return redirect('procesar_compra')  # Redirige a la función que generará el PDF y enviará los correos
+    
+    return render(request, 'dibujo/confirmar_compra.html', {'items': items})

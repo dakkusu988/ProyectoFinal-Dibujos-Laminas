@@ -49,10 +49,11 @@
                     <button type="" class="botonBorrar"> <b><i>Quitar esta Lámina </b></i> </button>
                 </form>
                 
-                <p></p>
             {% endfor %}
 
             <h3>Total: {{ total_precio }} €</h3>
+
+            <br>
 
             <a href="{% url 'confirmar_compra' %}" role="button" class="btn btn-success botonCarrito"> <b><i>Pagina de Confirmación</i></b> </a>
         </article>

@@ -294,7 +294,7 @@ def procesar_compra(request):
         send_mail(
             subject="Nuevo Pedido de Compra - Láminas Solicitadas por el Usuario",
             message=mensaje_autor,
-            from_email="tu_correo@example.com",
+            from_email="tiendadelaminas13@gmail.com",
             recipient_list=[email],
             fail_silently=False,
         )
@@ -309,7 +309,7 @@ def procesar_compra(request):
     send_mail(
         subject="Confirmación de Compra - Láminas Solicitadas al/los Autor/es",
         message=mensaje_comprador,
-        from_email="tu_correo@example.com",
+        from_email="tiendadelaminas13@gmail.com",
         recipient_list=[request.user.email],
         fail_silently=False,
     )

@@ -18,7 +18,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "clave_por_defecto_no_segura")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', 'tienda-de-laminas.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'tienda-de-laminas.onrender.com']
 
 
 # Application definition

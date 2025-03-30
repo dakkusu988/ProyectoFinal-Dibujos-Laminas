@@ -1,2 +1,7 @@
 Django~=4.2.7
-Djangorestframework
+djangorestframework
+gunicorn
+psycopg2-binary
+dj-database-url
+django-heroku
+whitenoise

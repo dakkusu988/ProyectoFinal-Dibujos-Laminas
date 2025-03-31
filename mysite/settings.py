@@ -3,6 +3,20 @@ from pathlib import Path
 from django.urls import reverse_lazy
 import dj_database_url  # Para configurar PostgreSQL
 import django_heroku
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+from cloudinary_storage.storage import MediaCloudinaryStorage
+
+# Se usa para que las imagenes de las Láminas no se borren cuando se reinicia el servidor en Render
+cloudinary.config(
+    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.getenv('CLOUDINARY_API_KEY'),
+    api_secret=os.getenv('CLOUDINARY_API_SECRET')
+)
+
+# Configuración de almacenamiento de imágenes
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -33,6 +47,8 @@ INSTALLED_APPS = [
     'dibujo',
     'api',
     'rest_framework',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +95,10 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Base de datos para Render (PostgreSQL)
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL'),
+        engine='django.db.backends.postgresql'
+    )
 }
 
 

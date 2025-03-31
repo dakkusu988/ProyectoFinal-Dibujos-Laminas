@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import FileExtensionValidator
 from django.forms import ValidationError
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
 
 
 class Precio(models.Model):
@@ -17,7 +18,8 @@ def validate_image(value):
     
 class Dibujo(models.Model):
     nombre = models.CharField(max_length=100)
-    imagen = models.ImageField(upload_to='imagen_dibujos/', validators=[FileExtensionValidator(['jpg', 'jpeg', 'png']), validate_image])
+    # imagen = models.ImageField(upload_to='imagen_dibujos/', validators=[FileExtensionValidator(['jpg', 'jpeg', 'png']), validate_image])
+    imagen = CloudinaryField('imagen') # Nueva imagen para poder almacenarla en Cloudinary
     genero = models.CharField(max_length=100)
     stock = models.IntegerField(blank=False, null=False)
     precio = models.ForeignKey(Precio, on_delete=models.CASCADE)

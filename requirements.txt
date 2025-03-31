@@ -6,3 +6,5 @@ dj-database-url
 django-heroku
 whitenoise
 Pillow
+cloudinary
+django-cloudinary-storage

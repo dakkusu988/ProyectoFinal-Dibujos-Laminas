@@ -18,6 +18,13 @@
     </article>
 
     <p>
+        {% if request.user.is_authenticated and request.user.is_staff %}
+            <a href="https://tienda-de-laminas.onrender.com/admin/" role="button" class="botonVolverAlMenu" 
+            target="_blank" rel="noopener noreferrer"> 
+                <b><i>Administración Django</i></b>
+            </a>
+        {% endif %}
+
         <a href="{% url 'editarUsuario' %}" role="button" class="botonEditar"> <b><i>Editar Perfil</b></i> </a>
         <a href="{% url 'logout' %}" role="button" class="botonBorrar"> <b><i>Cerrar Sesión</b></i> </a>
     </p>

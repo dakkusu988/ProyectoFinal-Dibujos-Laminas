@@ -208,7 +208,7 @@ def añadir_al_carrito(request, dibujo_id):
     carrito, _ = Carrito.objects.get_or_create(usuario=request.user)
     CarritoItem.objects.get_or_create(carrito=carrito, dibujo=dibujo)
 
-    return redirect('carrito')
+    return redirect('ver_carrito')
 
 
 # Eliminar Carrito

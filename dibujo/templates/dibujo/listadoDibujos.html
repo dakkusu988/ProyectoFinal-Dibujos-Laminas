@@ -31,77 +31,96 @@
     {% endif %}
     <p></p>
 
-    <article style="width: 25%;">
-        <form method="GET" action="">
-            <label for="stock"> <b>Stock:</b> </label>
-            <select name="stock" id="stock">
-                <option value="">Todo</option>
-                <option value="1">En existencia</option>
-                <option value="0">Agotados</option>
-            </select>
-            
-            <label for="precio"> <b>Precio:</b> </label>
-            <select name="precio" id="precio">
-                <option value="">Todo</option>
-                {% for precio in precios %}
-                    <option value="{{ precio.id }}">{{ precio.precio }}€</option>
-                {% endfor %}
-            </select>
-    
-            <label for="search"> <b>Buscar:</b> </label>
-            <input type="text" name="search" id="search" placeholder="Escribe el Nombre, Género o Autor de la lámina..." value="{{ search_query }}">
-            <button type="submit" class="botonEditar"> <b><i>Filtrar</i></b> </button>
-        </form>    
-    </article>
-
-    <div class="dibujo-lista">
-        {% for dibujo in dibujos %}
-            <div class="dibujo-item">
-                <a href="{% url 'detallesDibujos' pk=dibujo.pk %}">
-                    <img src="{{ dibujo.imagen.url }}" class="tamañoImagenListado imagenResaltada" alt="{{ dibujo.nombre }}">
-                </a>
-
-                <br>
+    <div class="container mt-4">
+        <form method="GET" action="" class="p-4 border rounded shadow-sm bg-light">
+            <div class="row g-2 align-items-center">
+                <div class="col-md-3">
+                    <label for="stock" class="form-label fw-bold">Stock:</label>
+                    <select name="stock" id="stock" class="form-select">
+                        <option value="">Todo</option>
+                        <option value="1">En existencia</option>
+                        <option value="0">Agotados</option>
+                    </select>
+                </div>
                 
-                <h4>{{ dibujo.nombre }}</h4>
-
-                {% if dibujo.stock == 0 %}
-                    <p><b>AGOTADO</b></p>
-                {% else %}
-                    <p>{{ dibujo.precio }}</p>
-                {% endif %}
+                <div class="col-md-3">
+                    <label for="precio" class="form-label fw-bold">Precio:</label>
+                    <select name="precio" id="precio" class="form-select">
+                        <option value="">Todo</option>
+                        {% for precio in precios %}
+                            <option value="{{ precio.id }}">{{ precio.precio }}€</option>
+                        {% endfor %}
+                    </select>
+                </div>
+        
+                <div class="col-md-4">
+                    <label for="search" class="form-label fw-bold">Buscar:</label>
+                    <input type="text" name="search" id="search" class="form-control" placeholder="Escribe el Nombre, Género o Autor de la lámina..." value="">
+                </div>
                 
-                <form method="post" action="{% url 'like-toggle' dibujo.id %}">
-                    {% csrf_token %}
-                    <button type="submit" class="botonMGSinClase">
-                        {% if user.is_authenticated and dibujo.id in user_likes %}
-                            <img src="{% static 'img/me_gusta.png' %}" alt="Me Gusta" class="tamañoImagenMG">
-                        {% else %}
-                            <img src="{% static 'img/no_me_gusta.png' %}" alt="No me Gusta" class="tamañoImagenMG">
-                        {% endif %}
-                    </button>
-                </form>
-
-                <p>{{ dibujo.like_set.count }} Me Gusta</p>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn botonEditar w-100">Filtrar</button>
+                </div>
             </div>
-        {% empty %}
-            <p>No se encontraron láminas disponibles.</p>
-        {% endfor %}
+        </form>
     </div>
 
-    <span style="text-align: center">
-        <h6>
-            <
-            {% if page_obj.has_previous %}
-                <a href="{% url 'listadoDibujos' %}?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
-            - {% endif %}
+    <div class="container mt-4">
+        <div class="row g-4">
+            {% for dibujo in dibujos %}
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <a href="{% url 'detallesDibujos' pk=dibujo.pk %}">
+                            <img src="{{ dibujo.imagen.url }}" class="card-img-top img-fluid" alt="{{ dibujo.nombre }}">
+                        </a>
+                        <div class="card-body text-center">
+                            <h4 class="card-title">{{ dibujo.nombre }}</h4>
+                            {% if dibujo.stock == 0 %}
+                                <p class="text-danger fw-bold">AGOTADO</p>
+                            {% else %}
+                                <p class="fw-bold">{{ dibujo.precio }}</p>
+                            {% endif %}
+                            <form method="post" action="{% url 'like-toggle' dibujo.id %}" class="mt-2">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-primary border-0">
+                                    {% if user.is_authenticated and dibujo.id in user_likes %}
+                                        <img src="{% static 'img/me_gusta.png' %}" alt="Me Gusta" class="img-fluid" style="width: 24px;">
+                                    {% else %}
+                                        <img src="{% static 'img/no_me_gusta.png' %}" alt="No me Gusta" class="img-fluid" style="width: 24px;">
+                                    {% endif %}
+                                </button>
+                            </form>
+                            <p class="mt-2 text-muted">{{ dibujo.like_set.count }} Me Gusta</p>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12 text-center">
+                    <p class="text-muted">No se encontraron láminas disponibles.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 
-                {{ page_obj.number }}
-
-            {% if page_obj.has_next %} -
-                <a href="{% url 'listadoDibujos' %}?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
-            {% endif %}
-            >
-        </h6>
-    </span>
+    <div class="container mt-4 text-center">
+        <nav>
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="{% url 'listadoDibujos' %}?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+                    </li>
+                {% endif %}
+                
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">{{ page_obj.number }}</span>
+                </li>
+                
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="{% url 'listadoDibujos' %}?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
 {% endblock %}

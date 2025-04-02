@@ -1,7 +1,7 @@
 import os
 import django
 
-# Configurar el entorno de Django
+# Archivo creado para que se cree el usuario Admin al desplegar la Aplicación, si ya existía, no hace nada
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 django.setup()
 

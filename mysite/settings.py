@@ -8,26 +8,17 @@ import cloudinary.uploader
 import cloudinary.api
 from cloudinary_storage.storage import MediaCloudinaryStorage
 
-# Se usa para que las imagenes de las Láminas no se borren cuando se reinicia el servidor en Render
-cloudinary.config(
-    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
-    api_key=os.getenv('CLOUDINARY_API_KEY'),
-    api_secret=os.getenv('CLOUDINARY_API_SECRET')
-)
-
-# Configuración de almacenamiento de imágenes
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# ---------------------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY", "clave_por_defecto_no_segura")
+# -----------------------------------------------------------------
+SECRET_KEY = os.getenv("SECRET_KEY", "clave_por_defecto_no_segura") # SECRET KEY para Render
+# SECRET_KEY = '' # SECRET KEY para pruebas en Local
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # ------------------------------------------------------------------
@@ -36,9 +27,8 @@ DEBUG = os.getenv("DEBUG", "False") == "True" # DEBUG para Render
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.pythonanywhere.com', 'tienda-de-laminas.onrender.com']
 
-
 # Application definition
-
+# -----------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -87,7 +77,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+# --------------------------------------------------------------
 # Base de datos para Render (PostgreSQL)
 DATABASES = {
     'default': dj_database_url.config(
@@ -101,14 +91,12 @@ DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': BASE_DIR / 'db.sqlite3',
-#    }
+#     }
 # }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
-
+# ------------------------------------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -119,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
-
+# ---------------------------------------------------
 LANGUAGE_CODE = 'es-es'
 TIME_ZONE = 'Europe/Berlin'
 
@@ -129,21 +117,32 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-
+# -----------------------------------------------------------
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Cambiado para Render
+STATIC_ROOT = BASE_DIR / 'static' # Para usar en Local
+# STATIC_ROOT = BASE_DIR / 'staticfiles'  # Para usar en Render
 
 # Configuración para servir archivos estáticos en producción
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-django_heroku.settings(locals())  # Esto auto-configura muchas cosas para Render
+django_heroku.settings(locals())  # Esto auto configura varias cosas para Render
 
 # PARA LAS IMAGENES
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+# Configuración de almacenamiento de imágenes
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# Se usa para que las imagenes de las Láminas no se borren cuando se reinicia el servidor en Render
+cloudinary.config(
+    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.getenv('CLOUDINARY_API_KEY'),
+    api_secret=os.getenv('CLOUDINARY_API_SECRET')
+)
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
+# -----------------------------------------------------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LANGUAGES = [
@@ -157,11 +156,12 @@ LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = 'detallesUsuario'
 
 # Configuración del servidor de correo
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # Pruebas por Consola
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # Pruebas por GMAIL
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # Pruebas por consola
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'tiendadelaminas13@gmail.com'
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+# EMAIL_HOST_PASSWORD = '' # Contraseña de Aplicación en Local
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD") # Contraseña de Aplicación en Render
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

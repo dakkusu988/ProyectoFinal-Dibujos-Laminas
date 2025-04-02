@@ -1,0 +1,40 @@
+- Tienda Online para YO u OTROS Usuarios (se ira viendo) puedan vender sus dibujos a otros usuarios.
+
+- El listado de los dibujos disponibles, los detalles de cada dibujo y los perfiles de Usuario seran PUBLICOS.
+
+- Si quieres comprar en los detalles algun dibujo, añadir el tuyo propio, editarlo, eliminarlo, etc. 
+  deberas estar logeado y autentificado.
+
+- Si quieres ver tu perfil y modificarlo tambien deberas estar logeado.
+
+- Desde la pagina principal se veran los dibujos con sus respectivos nombres y precios, 
+  habra una barra de busqueda para poder filtrar por nombre, genero o precio.
+
+- Los detalles de cada dibujo tendran un nombre, genero, stock, precio 
+  y un boton de compra que solo aparecera si estas logeado 
+  (si compras X dibujos el stock bajara ese X que se haya pedido, aunque pensare si añadir stock, ya que, 
+  este tipo de servicios trabajan a pelo dependiendo de los pedidos que se encarguen, tambien pensare si añadir
+  un sistema monetario como una cartera para comprar o no, estas 2 cosas son solo ideas posibles).
+
+- Cada usuario tendra su perfil con su nombre, "nombre de usuario", foto, descripcion y sus dibujos subidos 
+  (estos 3 ultimos no siendo necesarios para el registro, los otros si) donde cada "nombre de usuario" sera diferente, 
+  los nombres pueden ser iguales.
+
+- Puedes subir, editar y borrar dibujos que hayas subido.
+
+- Tendras la posibilidad de borrar tu cuenta si lo deseas.
+- Habra una pagina para logearse, cerrar sesion y registrarse.
+
+- Modelos necesarios de momento, usuarios y dibujos.
+- Un usuario puede comprar/subir 1 o varios dibujos y un dibujo puede ser subido o comprado por 1 o mas usuarios. (3 tablas)
+
+- Login, Logout y register
+- Autor sera Foreign Key de la tabla extendida de Usuario por defecto
+- Cada lámina sera editable solo por su creador
+- Ordenar o Filtrar por 2 o mas valores / Barra de Busqueda.
+- Tus laminas son visibles en tu perfil
+- Perfil de Usuario con sus detalles, láminas y MG accesible desde el autor
+- Hacer que le puedas dar MG a los dibujos, salga en tu perfil y haya un contador de MG en la lamina
+
+FALTA POR:
+- (Si me diera tiempo) Compra de Laminas, bajara el stock y que haya un sistema de saldo para que baje

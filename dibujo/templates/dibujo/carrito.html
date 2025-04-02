@@ -34,7 +34,9 @@
                     </button>
                 
                     <span>
-                        <b>{{ item.cantidad }}</b>
+                        <p>
+                            <b>{{ item.cantidad }}</b>
+                        </p>
                     </span>
                 
                     <button type="" name="accion" value="sumar" class="botonNoStock" {% if item.cantidad >= item.dibujo.stock %} disabled {% endif %}>
@@ -48,6 +50,8 @@
                     {% csrf_token %}
                     <button type="" class="botonBorrar"> <b><i>Quitar esta Lámina </b></i> </button>
                 </form>
+
+                <p></p>
                 
             {% endfor %}
 

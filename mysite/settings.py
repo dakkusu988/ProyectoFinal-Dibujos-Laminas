@@ -30,9 +30,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY", "clave_por_defecto_no_segura")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "False") == "True"
+# ------------------------------------------------------------------
+DEBUG = os.getenv("DEBUG", "False") == "True" # DEBUG para Render
+# DEBUG = True  # DEBUG para pruebas en Local
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', 'tienda-de-laminas.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.pythonanywhere.com', 'tienda-de-laminas.onrender.com']
 
 
 # Application definition
@@ -86,13 +88,6 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': BASE_DIR / 'db.sqlite3',
-#    }
-#}
-
 # Base de datos para Render (PostgreSQL)
 DATABASES = {
     'default': dj_database_url.config(
@@ -100,6 +95,15 @@ DATABASES = {
         engine='django.db.backends.postgresql'
     )
 }
+
+# Base de datos para hacer pruebas en local (SQLite)
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+# }
+
 
 
 # Password validation
@@ -153,7 +157,7 @@ LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = 'detallesUsuario'
 
 # Configuración del servidor de correo
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # Pruebas por GMAIL
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # Pruebas por consola
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587

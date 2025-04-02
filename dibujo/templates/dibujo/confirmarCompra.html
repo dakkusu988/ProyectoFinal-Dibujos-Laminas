@@ -22,6 +22,7 @@
                     <th>Autor</th>
                     <th>Precio</th>
                     <th>Cantidad</th>
+                    <th>Stock</th>
                 </tr>
             </thead>
 
@@ -32,6 +33,7 @@
                         <td>{{ item.dibujo.autor.username }}</td>
                         <td>{{ item.dibujo.precio.precio }}€</td>
                         <td>{{ item.cantidad }}</td>
+                        <td>{{ item.stock }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

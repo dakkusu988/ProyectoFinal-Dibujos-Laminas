@@ -21,9 +21,13 @@
     <p></p>
 
     {% if request.user.is_authenticated %}
-        <b> ¡Hola <u>{{ user.first_name }}</u>! ¡Bienvenido/a! </b>
+        <p>
+            <b>¡Hola <u>{{ user.first_name }}</u>! ¡Bienvenido/a!</b>
+        </p>
     {% else %}
-        <b> ¡Hola! ¡Bienvenido! </b>
+        <p>
+            <b>¡Hola! ¡Bienvenido!</b>
+        </p>
     {% endif %}
     <p></p>
 

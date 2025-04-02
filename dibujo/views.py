@@ -205,15 +205,11 @@ def ver_carrito(request):
 @login_required
 def añadir_al_carrito(request, dibujo_id):
     dibujo = get_object_or_404(Dibujo, id=dibujo_id)
-    carrito, created = Carrito.objects.get_or_create(usuario=request.user)
+    carrito, _ = Carrito.objects.get_or_create(usuario=request.user)
+    CarritoItem.objects.get_or_create(carrito=carrito, dibujo=dibujo)
 
-    # Verificar si ya está en el carrito
-    carrito_item, created = CarritoItem.objects.get_or_create(carrito=carrito, dibujo=dibujo)
-    if not created:
-        carrito_item.cantidad += 1
-    carrito_item.save()
+    return redirect('carrito')
 
-    return redirect('detallesDibujos', pk=dibujo_id)
 
 # Eliminar Carrito
 @login_required

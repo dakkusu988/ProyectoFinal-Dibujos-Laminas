@@ -34,9 +34,7 @@
                     </button>
                 
                     <span>
-                        <p>
-                            <b>{{ item.cantidad }}</b>
-                        </p>
+                        <b style="color: white;">{{ item.cantidad }}</b>
                     </span>
                 
                     <button type="" name="accion" value="sumar" class="botonNoStock" {% if item.cantidad >= item.dibujo.stock %} disabled {% endif %}>

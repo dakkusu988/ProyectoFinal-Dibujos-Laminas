@@ -21,4 +21,4 @@ if not User.objects.filter(username=username).exists():
     superuser.save()
     print("Superusuario creado correctamente.")
 else:
-    print("El superusuario ya existe.")
+    print("El Superusuario ya existe.")

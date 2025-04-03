@@ -18,6 +18,13 @@
     </article>
 
     <p>
+        {% if request.user.is_authenticated and request.user.is_staff %}
+            <a href="https://tienda-de-laminas.onrender.com/admin/" role="button" class="botonNoStock" 
+            target="_blank" rel="noopener noreferrer"> 
+                <b><i>Administración Django</i></b>
+            </a>
+        {% endif %}
+
         <a href="{% url 'editarUsuario' %}" role="button" class="botonEditar mb-3"> <b><i>Editar Perfil</b></i> </a>
         <a href="{% url 'logout' %}" role="button" class="botonBorrar mb-3"> <b><i>Cerrar Sesión</b></i> </a>
     </p>
@@ -27,7 +34,7 @@
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             {% for dibujo in dibujos %}
                 <div class="col">
-                    <div class="card shadow-sm h-100">
+                    <div class="card shadow-sm h-100 custom-bg">
                         <a href="{% url 'detallesDibujos' pk=dibujo.pk %}">
                             <img src="{{ dibujo.imagen.url }}" class="card-img-top img-fluid" alt="{{ dibujo.nombre }}">
                         </a>
@@ -52,7 +59,7 @@
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             {% for dibujo in me_gustas %}
                 <div class="col">
-                    <div class="card shadow-sm h-100">
+                    <div class="card shadow-sm h-100 custom-bg">
                         <a href="{% url 'detallesDibujos' pk=dibujo.pk %}">
                             <img src="{{ dibujo.imagen.url }}" class="card-img-top img-fluid" alt="{{ dibujo.nombre }}">
                         </a>

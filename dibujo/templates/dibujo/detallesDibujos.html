@@ -53,15 +53,15 @@
             <button type="submit" class="botonMGSinClase">
                 {% if user.is_authenticated and dibujo.id in user_likes %}
                     <p style="width: 4.5%;">
-                        <img src="{% static 'img/me_gusta.png' %}" alt="Me Gusta" class="tamañoImagenMG">
+                        <img src="{% static 'img/me_gusta.png' %}" alt="Me Gusta" class="img-fluid" style="width: 24px;">
                     </p>
                 {% else %} 
                     <p style="width: 4.5%;">
-                        <img src="{% static 'img/no_me_gusta.png' %}" alt="No me Gusta" class="tamañoImagenMG">
+                        <img src="{% static 'img/no_me_gusta.png' %}" alt="No me Gusta" class="img-fluid" style="width: 24px;">
                     </p>
                 {% endif %}
             </button>
-            <p>{{ dibujo.like_set.count }} Me Gusta</p>           
+            <p class="mt-2 text-muted">{{ dibujo.like_set.count }} Me Gusta</p>           
         </form>
 
     </article>

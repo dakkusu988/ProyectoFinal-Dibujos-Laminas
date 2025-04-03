@@ -78,7 +78,7 @@
                             {% endif %}
                             <form method="post" action="{% url 'like-toggle' dibujo.id %}" class="mt-2">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-outline-primary border-0">
+                                <button type="submit" class="botonMGSinClase">
                                     {% if user.is_authenticated and dibujo.id in user_likes %}
                                         <img src="{% static 'img/me_gusta.png' %}" alt="Me Gusta" class="img-fluid" style="width: 24px;">
                                     {% else %}

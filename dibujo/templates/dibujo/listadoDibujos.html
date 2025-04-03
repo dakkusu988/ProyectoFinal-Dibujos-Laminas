@@ -21,21 +21,16 @@
     <p></p>
 
     {% if request.user.is_authenticated %}
-        <p>
-            <b>¡Hola <u>{{ user.first_name }}</u>! ¡Bienvenido/a!</b>
-        </p>
+        <strong> ¡Hola <u>{{ user.first_name }}</u>! ¡Bienvenido/a! </strong>
     {% else %}
-        <p>
-            <b>¡Hola! ¡Bienvenido!</b>
-        </p>
+        <strong> ¡Hola! ¡Bienvenido! </strong>
     {% endif %}
     <p></p>
-
     <div class="container mt-4">
         <form method="GET" action="" class="p-4 border rounded shadow-sm bg-light">
-            <div class="row g-2 align-items-center">
-                <div class="col-md-3">
-                    <label for="stock" class="form-label fw-bold">Stock:</label>
+            <div class="row g-3 align-items-center">
+                <div class="col-md-3 d-flex flex-column">
+                    <label for="stock" class="form-label fw-bold colorLabel">Stock:</label>
                     <select name="stock" id="stock" class="form-select">
                         <option value="">Todo</option>
                         <option value="1">En existencia</option>
@@ -43,7 +38,7 @@
                     </select>
                 </div>
                 
-                <div class="col-md-3">
+                <div class="col-md-3 d-flex flex-column colorLabel">
                     <label for="precio" class="form-label fw-bold">Precio:</label>
                     <select name="precio" id="precio" class="form-select">
                         <option value="">Todo</option>
@@ -53,12 +48,13 @@
                     </select>
                 </div>
         
-                <div class="col-md-4">
-                    <label for="search" class="form-label fw-bold">Buscar:</label>
+                <div class="col-md-3 d-flex flex-column">
+                    <label for="search" class="form-label fw-bold colorLabel">Buscar:</label>
                     <input type="text" name="search" id="search" class="form-control" placeholder="Escribe el Nombre, Género o Autor de la lámina..." value="">
                 </div>
                 
-                <div class="col-md-2 d-flex align-items-end">
+                <div class="col-md-3 d-flex flex-column">
+                    <label class="form-label">&nbsp;</label>
                     <button type="submit" class="btn botonEditar w-100">Filtrar</button>
                 </div>
             </div>
@@ -68,7 +64,7 @@
     <div class="container mt-4">
         <div class="row g-4">
             {% for dibujo in dibujos %}
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="card shadow-sm">
                         <a href="{% url 'detallesDibujos' pk=dibujo.pk %}">
                             <img src="{{ dibujo.imagen.url }}" class="card-img-top img-fluid" alt="{{ dibujo.nombre }}">

@@ -109,7 +109,7 @@
                 {% endif %}
                 
                 <li class="page-item active" aria-current="page">
-                    <span class="page-link custom-bg" style="border: 1px solid cyan!important;">1</span>
+                    <span class="page-link custom-bg" style="border: 1px solid cyan!important;">{{ page_obj.number }}</span>
                 </li>
                 
                 {% if page_obj.has_next %}

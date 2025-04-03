@@ -7,69 +7,68 @@
 {% endblock %}
 
 {% block contenido %}
-    <a href="{% url 'listadoDibujos' %}" role="button" class="botonVolverAlMenu">Volver a la Tienda</a>
-    <a href="{% url 'añadirDibujos' %}" class="botonAñadir" role="button">Añadir Lámina</a>
-    <a href="{% url 'ver_carrito' %}" role="button" class="botonCarrito">Ver Carrito</a>
+    <a href="{% url 'listadoDibujos' %}" role="button" class="botonVolverAlMenu mb-3">Volver a la Tienda</a>
+    <a href="{% url 'añadirDibujos' %}" class="botonAñadir mb-3" role="button">Añadir Lámina</a>
+    <a href="{% url 'ver_carrito' %}" role="button" class="botonCarrito mb-3">Ver Carrito</a>
 
-    <article style="margin-right: 0px">
+    <article class="mb-4">
         <p><b>Usuario:</b> @{{ user.username }}</p>
         <p><b>Nombre:</b> {{ user.first_name }}</p>
         <p><b>Email:</b> {{ user.email }}</p>
     </article>
 
     <p>
-        {% if request.user.is_authenticated and request.user.is_staff %}
-            <a href="https://tienda-de-laminas.onrender.com/admin/" role="button" class="botonNoStock" 
-            target="_blank" rel="noopener noreferrer"> 
-                <b><i>Administración Django</i></b>
-            </a>
-        {% endif %}
-
-        <a href="{% url 'editarUsuario' %}" role="button" class="botonEditar"> <b><i>Editar Perfil</b></i> </a>
-        <a href="{% url 'logout' %}" role="button" class="botonBorrar"> <b><i>Cerrar Sesión</b></i> </a>
+        <a href="{% url 'editarUsuario' %}" role="button" class="botonEditar mb-3"> <b><i>Editar Perfil</b></i> </a>
+        <a href="{% url 'logout' %}" role="button" class="botonBorrar mb-3"> <b><i>Cerrar Sesión</b></i> </a>
     </p>
     
-    <h2 style="text-align: center">Láminas de {{ user.username }}:</h2>
-    <article>
-        <div class="dibujo-lista">
+    <h2 class="text-center mb-4">Láminas de {{ user.username }}:</h2>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             {% for dibujo in dibujos %}
-                <div class="dibujo-item">
-                    <a href="{% url 'detallesDibujos' pk=dibujo.pk %}">
-                        <img src="{{ dibujo.imagen.url }}" class="tamañoImagenUsuario imagenResaltada" alt="{{ dibujo.nombre }}">
-                    </a>
-                    <br>
-                    <h4>{{ dibujo.nombre }}</h4>
-                    {% if dibujo.stock == 0 %}
-                        <b>AGOTADO</b>
-                    {% else %}
-                        <p>{{ dibujo.precio }}</p>
-                    {% endif %}
+                <div class="col">
+                    <div class="card shadow-sm h-100">
+                        <a href="{% url 'detallesDibujos' pk=dibujo.pk %}">
+                            <img src="{{ dibujo.imagen.url }}" class="card-img-top img-fluid" alt="{{ dibujo.nombre }}">
+                        </a>
+                        <div class="card-body text-center">
+                            <h5>{{ dibujo.nombre }}</h5>
+                            {% if dibujo.stock == 0 %}
+                                <p class="text-danger"><b>AGOTADO</b></p>
+                            {% else %}
+                                <p>{{ dibujo.precio }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             {% empty %}
                 <p>No se encontraron láminas disponibles.</p>
             {% endfor %}
         </div>
-    </article>
+    </div>
 
-    <h2 style="text-align: center">Me Gusta de {{ user.username }}:</h2>
-    <article>
-        <div class="dibujo-lista">
+    <h2 class="text-center mb-4">Me Gusta de {{ user.username }}:</h2>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             {% for dibujo in me_gustas %}
-                <div class="dibujo-item">
-                    <a href="{% url 'detallesDibujos' pk=dibujo.pk %}">
-                        <img src="{{ dibujo.imagen.url }}" class="tamañoImagenUsuario imagenResaltada" alt="{{ dibujo.nombre }}">
-                    </a>
-                    <br>
-                    <h4>{{ dibujo.nombre }}</h4>
-                    {% if dibujo.stock == 0 %}
-                        <b>AGOTADO</b>
-                    {% else %}
-                        <p>{{ dibujo.precio }}</p>
-                    {% endif %}
+                <div class="col">
+                    <div class="card shadow-sm h-100">
+                        <a href="{% url 'detallesDibujos' pk=dibujo.pk %}">
+                            <img src="{{ dibujo.imagen.url }}" class="card-img-top img-fluid" alt="{{ dibujo.nombre }}">
+                        </a>
+                        <div class="card-body text-center">
+                            <h5>{{ dibujo.nombre }}</h5>
+                            {% if dibujo.stock == 0 %}
+                                <p class="text-danger"><b>AGOTADO</b></p>
+                            {% else %}
+                                <p>{{ dibujo.precio }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             {% empty %}
                 <p>No has marcado ninguna lámina como "Me Gusta".</p>
             {% endfor %}
         </div>
-    </article>
+    </div>
 {% endblock %}

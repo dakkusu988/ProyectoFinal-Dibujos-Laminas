@@ -8,19 +8,20 @@
 
 {% block contenido %}
 
-    <a href="{% url 'detallesDibujos' pk=dibujo.pk %}" role="button" class="botonVolverAlMenu">Cancelar</a>
-    
-    <article>
-        <h3>¿Estás seguro de que quieres borrar la lámina <b>"{{ dibujo.nombre }}"</b>?</h3>
-        <h5>Esta acción es PERMANENTE y no tiene vuelta atrás.</h5>
-    </article>
+    <div class="container mt-5">
+        <article class="p-4 border rounded shadow-sm bg-light text-center">
+            <h3 class="text-danger">¿Estás seguro de que quieres borrar la lámina <b>"{{ dibujo.nombre }}"</b>?</h3>
+            <h5 class="text-warning">Esta acción es PERMANENTE y no tiene vuelta atrás.</h5>
+        </article>
 
-    <form method="post" style="margin-right: 1350px">
+        <div class="d-flex justify-content-center gap-3 mt-3">
+            <a href="{% url 'detallesDibujos' pk=dibujo.pk %}" role="button" class="btn btn-secondary">Cancelar</a>
 
-        {% csrf_token %}
-        <button type="submit" class="botonBorrar"> <b><i>Confirmación</i></b> </button>
-
-    </form>
-    
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger"> Confirmación </button>
+            </form>
+        </div>
+    </div>
 
 {% endblock %}

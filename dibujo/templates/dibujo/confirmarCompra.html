@@ -10,36 +10,36 @@
 
     <a href="{% url 'ver_carrito' %}" role="button" class="botonVolverAlMenu">Cancelar</a>
 
-    <article>
+    <div class="container">
+        <h3 class="text-danger">Por favor, REVISA tu Pedido antes de "Confirmar la Compra".</h3>
+        <h5 class="text-warning">Esta acción es PERMANENTE y no tiene vuelta atrás.</h5>
 
-        <h3>Por favor, REVISA tu Pedido antes de "Confirmar la Compra".</h3>
-        <h5>Esta acción es PERMANENTE y no tiene vuelta atrás.</h5>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Autor</th>
-                    <th>Precio</th>
-                    <th>Cantidad</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                {% for item in items %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
                     <tr>
-                        <td>{{ item.dibujo.nombre }}</td>
-                        <td>{{ item.dibujo.autor.username }}</td>
-                        <td>{{ item.dibujo.precio.precio }}€</td>
-                        <td>{{ item.cantidad }}</td>
+                        <th>Nombre</th>
+                        <th>Autor</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.dibujo.nombre }}</td>
+                            <td>{{ item.dibujo.autor.username }}</td>
+                            <td>{{ item.dibujo.precio.precio }}€</td>
+                            <td>{{ item.cantidad }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
         <h3>Total: {{ total_precio }}€</h3>
-
-    </article>
+    </div>
 
     <form method="post" action="{% url 'procesar_compra' %}">
         {% csrf_token %}
